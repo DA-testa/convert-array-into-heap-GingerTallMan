@@ -3,48 +3,32 @@
 
 def build_heap(data):
     swaps = []
-    # TODO: Creat heap and heap sort
-    for i in range(data,0,-1):
+    n = len(data)
+    for i in range(n//2, -1, -1):
         j = i
-        while j > 1:
-            if data[i-1]<data[j-1]:
-                data[i-1], data[j-1] = data[j-1], data[i-1]
-                swaps.append([j-1,i-1])
-                i = j
-            else:
-                i=0
+        while True:
+            k = j*2 + 1
+            if k >= n:
+                break
+            if k+1 < n and data[k+1] < data[k]:
+                k += 1
+            if data[j] <= data[k]:
+                break
+            swaps.append((j, k))
+            data[j], data[k] = data[k], data[j]
+            j = k
     return swaps
 
 
-def main():   
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
-    temp=input()
-    if "I" in temp:
-        n = int(input())
+def main():
+    inputs=input()
+    if "I" in inputs:
         data = list(map(int, input().split()))
-    if "F" in temp:
-        lines = open("./tests/"+str(input()),"r").readlines()
-        n = int(lines[0])
-        data = list(map(int, lines[1].split()))
-
-    # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
-
-    # checks if lenght of data is the same as the said lenght
-    assert len(data) == n
-
-    # calls function to assess the data 
-    # and give back all swaps
+    elif "F" in inputs:
+        f=input()
+        with open("tests/" + f, 'r') as f:
+            data=list(map(int, f.readline().split()))
     swaps = build_heap(data)
-
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
-
-
-    # output all swaps
     print(len(swaps))
     for i, j in swaps:
         print(i, j)
