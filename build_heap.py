@@ -21,14 +21,13 @@ def main():
     # add another input for I or F 
     # first two tests are from keyboard, third test is from a file
     temp=input()
-    if 'I'in(temp):
-        # input from keyboard
+    if "I" in temp:
         n = int(input())
         data = list(map(int, input().split()))
-    elif 'F'in(temp):
-        with open('tests/' + input().replace('\r',''), mode="r") as fails:
-            n = int(fails.readline())
-            data = list(map(int, fails.readline().split()))
+    if "F" in temp:
+        lines = open("./tests/"+str(input()),"r").readlines()
+        n = int(lines[0])
+        data = list(map(int, lines[1].split()))
 
     # input from keyboard
     n = int(input())
